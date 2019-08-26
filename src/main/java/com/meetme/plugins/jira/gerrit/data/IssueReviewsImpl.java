@@ -18,14 +18,13 @@ import com.meetme.plugins.jira.gerrit.data.dto.GerritChange;
 
 import com.atlassian.jira.issue.Issue;
 import com.atlassian.jira.issue.IssueManager;
-import com.sonymobile.tools.gerrit.gerritevents.GerritQueryException;
-import com.sonymobile.tools.gerrit.gerritevents.GerritQueryHandler;
-import com.sonymobile.tools.gerrit.gerritevents.GerritQueryHandlerWithPersistedConnection;
+import com.meetme.plugins.jira.gerrit.tabpanel.GerritEventKeys;
+import com.sonymobile.tools.gerrit.gerritevents.*;
+import com.sonymobile.tools.gerrit.gerritevents.http.HttpAuthentication;
 import com.sonymobile.tools.gerrit.gerritevents.ssh.Authentication;
 import com.sonymobile.tools.gerrit.gerritevents.ssh.SshException;
 
 import net.sf.json.JSONObject;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +43,8 @@ public class IssueReviewsImpl implements IssueReviewsManager {
     private GerritConfiguration configuration;
 
     private IssueManager jiraIssueManager;
+
+    private GerritQueryHandlerHttp queryHandlerHttp;
 
     private GerritQueryHandlerWithPersistedConnection queryHandler;
 
@@ -86,19 +87,36 @@ public class IssueReviewsImpl implements IssueReviewsManager {
     protected List<GerritChange> getReviewsFromGerrit(String searchQuery) throws GerritQueryException {
         List<GerritChange> changes;
 
-        if (!configuration.isSshValid()) {
-            throw new GerritConfiguration.NotConfiguredException("Not configured for SSH access");
-        }
-
+        String connectionType = configuration.getConnectionType();
         List<JSONObject> reviews;
 
-        try {
-            GerritQueryHandler query = getQueryHandler(configuration);
-            reviews = query.queryJava(searchQuery, false, true, false);
-        } catch (SshException e) {
-            throw new GerritQueryException("An ssh error occurred while querying for reviews.", e);
-        } catch (IOException e) {
-            throw new GerritQueryException("An error occurred while querying for reviews.", e);
+        if(connectionType.equals(GerritEventKeys.CONNECTION_TYPE_SSH)) {
+
+            if (!configuration.isSshValid()) {
+                throw new GerritConfiguration.NotConfiguredException("Not configured for SSH access");
+            }
+
+            try {
+                GerritQueryHandler querySsh = getQueryHandlerSsh(configuration);
+                reviews = querySsh.queryJava(searchQuery, false, true, false);
+            } catch (SshException e) {
+                throw new GerritQueryException("An ssh error occurred while querying for reviews.", e);
+            } catch (IOException e) {
+                throw new GerritQueryException("An error occurred while querying for reviews.", e);
+            }
+        }
+        else {
+
+            if(!configuration.isHttpValid()) {
+                throw new GerritConfiguration.NotConfiguredException("Not configured for HTTP access");
+            }
+
+            try {
+                GerritQueryHandlerHttp queryHttp = getQueryHandlerHttp(configuration);
+                reviews = queryHttp.queryJava(searchQuery, true, true, true);
+            } catch(IOException e) {
+                throw new GerritQueryException("An error occurred while querying for reviews.", e);
+            }
         }
 
         changes = new ArrayList<>(reviews.size());
@@ -113,14 +131,23 @@ public class IssueReviewsImpl implements IssueReviewsManager {
                 continue;
             }
 
-            changes.add(new GerritChange(obj));
+            if(connectionType.equals(GerritEventKeys.CONNECTION_TYPE_HTTP)) {
+                obj.element("url", configuration.getHttpBaseUrl());
+            }
+            changes.add(new GerritChange(obj, connectionType));
         }
 
         Collections.sort(changes);
         return changes;
     }
 
-    private GerritQueryHandler getQueryHandler(GerritConfiguration configuration) {
+    private GerritQueryHandlerHttp getQueryHandlerHttp(GerritConfiguration configuration) {
+        HttpAuthentication httpAuth = new HttpAuthentication(configuration.getHttpUsername(), configuration.getHttpPassword());
+        this.queryHandlerHttp = new GerritQueryHandlerHttp(configuration.getHttpBaseUrl().toString(), httpAuth);
+        return queryHandlerHttp;
+    }
+
+    private GerritQueryHandler getQueryHandlerSsh(GerritConfiguration configuration) {
         QueryHandlerConfig config = new QueryHandlerConfig(configuration.getSshPrivateKey(),
                 configuration.getSshUsername(), configuration.getSshHostname(),
                 configuration.getSshPort(), configuration.getConnectionTimeout());
