@@ -153,7 +153,7 @@ public class GerritConfigurationImpl implements GerritConfiguration {
 
     @Override
     public List<String> getIdsOfKnownGerritProjects() {
-        List<String> idsOfKnownGerritProjects = (List) settings.get(FIELD_KNOWN_GERRIT_PROJECTS);
+        List<String> idsOfKnownGerritProjects = (List<String>) settings.get(FIELD_KNOWN_GERRIT_PROJECTS);
         return idsOfKnownGerritProjects != null ? idsOfKnownGerritProjects : Lists.newArrayList();
     }
 

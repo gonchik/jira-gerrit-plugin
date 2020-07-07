@@ -181,23 +181,14 @@
         <plugins>
             <plugin>
                 <groupId>com.atlassian.maven.plugins</groupId>
-                <artifactId>maven-jira-plugin</artifactId>
+                <artifactId>jira-maven-plugin</artifactId>
                 <version>${amps.version}</version>
                 <extensions>true</extensions>
                 <configuration>
                     <productVersion>${jira.version}</productVersion>
                     <productDataVersion>${jira.version}</productDataVersion>
                     <log4jProperties>src/aps/resources/log4j.properties</log4jProperties>
-                    <enableFastdev>false</enableFastdev>
-
-                    <pluginArtifacts>
-                        <pluginArtifact>
-                            <groupId>com.atlassian.labs.plugins</groupId>
-                            <artifactId>quickreload</artifactId>
-                            <version>${quick.reload.version}</version>
-                        </pluginArtifact>
-                    </pluginArtifacts>
-
+                    <allowGoogleTracking>false</allowGoogleTracking>
                     <products>
                         <product>
                             <id>jira</id>
@@ -232,7 +223,7 @@
 
     <properties>
         <jira.version>7.2.0</jira.version>
-        <amps.version>6.3.21</amps.version>
+        <amps.version>8.0.2</amps.version>
         <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <testkit.version>6.3.11</testkit.version>
