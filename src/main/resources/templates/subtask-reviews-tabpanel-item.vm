@@ -78,7 +78,7 @@
     <div class="actionContainer twixi-wrap concise">
         #if ($hasChanges)
         <a href="#" class="twixi">
-            <span class="icon twixi-closed">
+            <span class="icon-default aui-icon aui-icon-small aui-iconfont-collapsed">
                 <span>Show</span>
             </span>
         </a>
@@ -100,7 +100,7 @@
     <div class="actionContainer twixi-wrap verbose">
         #if ($hasChanges)
         <a href="#" class="twixi">
-            <span class="icon twixi-opened">
+            <span class="icon-default aui-icon aui-icon-small aui-iconfont-expanded">
                 <span>Hide</span>
             </span>
         </a>

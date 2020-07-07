@@ -227,7 +227,6 @@
         <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <testkit.version>6.3.11</testkit.version>
-        <quick.reload.version>1.30.5</quick.reload.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <jira.test.version>7.2.0</jira.test.version>
