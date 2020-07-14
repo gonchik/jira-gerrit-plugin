@@ -48,7 +48,7 @@ public class IssueStatusOptionsProvider implements WebItemProvider {
         this.authenticationContext = authenticationContext;
     }
 
-    public List<Object> getItems(Map<String, Object> params) {
+    public Iterable<WebItem> getItems(Map<String, Object> params) {
         final VelocityRequestContext requestContext = requestContextFactory.getJiraVelocityRequestContext();
         final I18nHelper i18n = authenticationContext.getI18nHelper();
         final Issue issue = (Issue) params.get("issue");

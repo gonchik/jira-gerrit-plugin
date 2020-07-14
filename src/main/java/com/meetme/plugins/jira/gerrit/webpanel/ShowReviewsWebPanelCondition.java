@@ -60,10 +60,8 @@ public class ShowReviewsWebPanelCondition implements Condition {
         }
 
         try {
-
             return !isEmpty(issueReviewsManager.getReviewsForIssue(issue));
         } catch (GerritQueryException gerritQueryException) {
-
             log.warn(gerritQueryException.getLocalizedMessage(), gerritQueryException);
             return false;
         }
