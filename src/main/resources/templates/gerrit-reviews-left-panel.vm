@@ -62,7 +62,7 @@ limitations under the License.
         </td>
 
 		<td class="nav gerrit-subject">
-            <a href="$change.url" title="$change.subject" target="gerrit-review-$change.number,$change.patchSet.number">$change.subject</a>
+            <a href="$change.url" title="${change.subject}" target="gerrit-review-$change.number,$change.patchSet.number">${change.subject}</a>
         </td>
 
         <td class="nav gerrit-branch">

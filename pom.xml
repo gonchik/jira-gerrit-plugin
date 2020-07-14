@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.meetme.plugins.jira</groupId>
     <artifactId>gerrit-plugin</artifactId>
-    <version>3.5-SNAPSHOT</version>
+    <version>3.5.1</version>
 
     <organization>
         <name>MeetMe, Inc.</name>
@@ -173,7 +173,7 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.3</version>
+            <version>1.4</version>
         </dependency>
     </dependencies>
 
@@ -222,15 +222,15 @@
     </build>
 
     <properties>
-        <jira.version>7.2.0</jira.version>
+        <jira.version>8.5.0</jira.version>
         <amps.version>8.0.2</amps.version>
         <plugin.testrunner.version>1.2.3</plugin.testrunner.version>
         <atlassian.plugin.key>${project.groupId}.${project.artifactId}</atlassian.plugin.key>
         <testkit.version>6.3.11</testkit.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <jira.test.version>7.2.0</jira.test.version>
-        <jira.data.version>7.2.0</jira.data.version>
+        <jira.test.version>7.6.0</jira.test.version>
+        <jira.data.version>7.6.0</jira.data.version>
         <jira.rest.version>3.0.8</jira.rest.version>
         <atlas.template.version>3.0.0</atlas.template.version>
         <atlas.concurrent.version>3.0.0</atlas.concurrent.version>

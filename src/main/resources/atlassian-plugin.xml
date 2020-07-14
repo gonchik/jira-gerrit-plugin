@@ -44,7 +44,7 @@
     </component>
 
     <component name="IssueReviews Manager" class="com.meetme.plugins.jira.gerrit.data.IssueReviewsImpl" key="issueReviewsManager">
-        <description>Retrieves Gerrit reviews related to a given JIRA Issue.</description>
+        <description>Retrieves Gerrit reviews related to a given Jira Issue.</description>
         <interface>com.meetme.plugins.jira.gerrit.data.IssueReviewsManager</interface>
     </component>
 

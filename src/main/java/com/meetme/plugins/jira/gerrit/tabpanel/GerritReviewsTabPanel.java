@@ -94,14 +94,14 @@ public class GerritReviewsTabPanel extends AbstractIssueTabPanel2 implements Iss
     }
 
     @Override
-    public ShowPanelReply showPanel(ShowPanelRequest arg0) {
+    public ShowPanelReply showPanel(ShowPanelRequest request) {
         boolean isShowing = true;
 
         if (!isConfigurationReady()) {
             isShowing = false;
         }
 
-        if (configuration.getUseGerritProjectWhitelist() && !isGerritProject(arg0.issue())) {
+        if (configuration.getUseGerritProjectWhitelist() && !isGerritProject(request.issue())) {
             isShowing = false;
         }
 

@@ -45,23 +45,23 @@
         <td bgcolor="#ffffff" nowrap="nowrap">
             #set( $comparisonName = $comparison.name() )
             <select name="comparison" id="comparison">
-                #set $isSelected = $comparisonName == "LESS_THAN")
+                #set( $isSelected = $comparisonName == "LESS_THAN")
                 #option("LESS_THAN" $isSelected "&lt;" )
 
-                #set($isSelected = $comparisonName == "LESS_OR_EQUAL")
+                #set( $isSelected = $comparisonName == "LESS_OR_EQUAL")
                 #option("LESS_OR_EQUAL" $isSelected "&lt;=" )
 
                 #set( $isSelected = $comparisonName == "EQUAL_TO")
                 #option("EQUAL_TO" $isSelected "==" )
 
-                #set($isSelected = $comparisonName == "GREATER_OR_EQUAL")
+                #set( $isSelected = $comparisonName == "GREATER_OR_EQUAL")
                 #option("GREATER_OR_EQUAL" $isSelected "&gt;=" )
 
                 #set( $isSelected = $comparisonName == "GREATER_THAN")
                 #option("GREATER_THAN" $isSelected "&gt;")
             </select>
             <br />
-            <font size="1">$i18n.getText("gerrit.workflow.score-condition.edit.comparison.description")</font>
+            <font size="1">${i18n.getText("gerrit.workflow.score-condition.edit.comparison.description")}</font>
         </td>
     </tr>
 

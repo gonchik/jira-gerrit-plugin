@@ -30,6 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class IssueStatusOptionsProvider implements WebItemProvider {
@@ -47,8 +48,7 @@ public class IssueStatusOptionsProvider implements WebItemProvider {
         this.authenticationContext = authenticationContext;
     }
 
-    @Override
-    public Iterable<WebItem> getItems(Map<String, Object> params) {
+    public List<Object> getItems(Map<String, Object> params) {
         final VelocityRequestContext requestContext = requestContextFactory.getJiraVelocityRequestContext();
         final I18nHelper i18n = authenticationContext.getI18nHelper();
         final Issue issue = (Issue) params.get("issue");
@@ -96,8 +96,8 @@ public class IssueStatusOptionsProvider implements WebItemProvider {
     }
 
     static boolean isIssueOpen(Issue issue) {
-        log.debug("Checking if " + issue.getKey() + " is open: " + issue.getResolutionObject());
-        return issue.getResolutionObject() == null;
+        log.debug("Checking if " + issue.getKey() + " is open: " + issue.getResolution().getName());
+        return issue.getResolution() == null;
     }
 
     static boolean wantsUnresolved(final String gerritIssueStatus) {

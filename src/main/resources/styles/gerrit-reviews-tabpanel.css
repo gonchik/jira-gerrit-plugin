@@ -72,7 +72,7 @@ span.gerrit-no-reviews
 {
   white-space: nowrap;
   overflow: hidden;
-  text-overflow: none;
+  text-overflow: ellipsis;
   width: 81%;
   text-align: left;
 }

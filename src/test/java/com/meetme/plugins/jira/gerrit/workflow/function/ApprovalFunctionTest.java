@@ -109,7 +109,7 @@ public abstract class ApprovalFunctionTest extends AbstractWorkflowTest {
     /**
      * Test method for {@link ApprovalFunction#execute(Map, Map, PropertySet)}.
      *
-     * @throws WorkflowException
+     * @throws WorkflowException Exception that is thrown from generic workflow.
      */
     @Test(expected = IllegalStateException.class)
     public void testExecute_notReady() throws WorkflowException {

@@ -31,6 +31,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
+import static com.google.common.collect.Iterables.isEmpty;
+
 public class IssueReviewsImpl implements IssueReviewsManager {
     private static final Logger log = LoggerFactory.getLogger(IssueReviewsImpl.class);
     private final Map<String, List<GerritChange>> lruCache;
@@ -47,6 +49,9 @@ public class IssueReviewsImpl implements IssueReviewsManager {
 
     @Override
     public Set<String> getIssueKeys(Issue issue) {
+        if (configuration.getUseGerritProjectWhitelist() && !isGerritProject(issue)) {
+            return Collections.emptySet();
+        }
         return jiraIssueManager.getAllIssueKeys(issue.getId());
     }
 
@@ -132,5 +137,13 @@ public class IssueReviewsImpl implements IssueReviewsManager {
         }
 
         return result;
+    }
+
+    private boolean isGerritProject(final Issue issue) {
+        if (issue.getProjectId() == null) {
+            return false;
+        }
+        return !isEmpty(configuration.getIdsOfKnownGerritProjects()) &&
+                configuration.getIdsOfKnownGerritProjects().contains(issue.getProjectId().toString());
     }
 }
